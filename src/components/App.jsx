@@ -14,6 +14,26 @@ export default class App extends Component {
     ],
     filter: "",
   };
+
+  componentDidMount() {
+    console.log(" component did mount");
+    const contacts = localStorage.getItem("contacts");
+    const parsedContacts = JSON.parse(contacts);
+    console.log(parsedContacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("component did update");
+    if (this.state.contacts !== prevState.contacts) {
+      console.log("component was updated");
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
+
+
   formId = () => {
     shortid.generate();
   };
